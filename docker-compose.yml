@@ -2,7 +2,7 @@ version: '2'
 
 services:
   carts:
-    image: weaveworksdemos/carts
+    image: codelab/carts
     hostname: carts
     restart: always
     cap_drop:
@@ -14,13 +14,11 @@ services:
       - /tmp:rw,noexec,nosuid
     environment:
       - reschedule=on-node-failure
-      - ZIPKIN_HOST=zipkin
-      - ZIPKIN_ENABLED=true
     ports:
       - "8081:80"
-  zipkin:
-    image: openzipkin/zipkin 
-    hostname: zipkin
+  carts-db:
+    image: mangoraft/mongodb-arm
+    hostname: carts-db
     restart: always
     cap_drop:
       - all
@@ -28,10 +26,8 @@ services:
       - CHOWN
       - SETGID
       - SETUID
-    read_only: true
     tmpfs:
       - /tmp:rw,noexec,nosuid
     environment:
       - reschedule=on-node-failure
-    ports:
-      - "9411:9411"
+      - AUTH=no
