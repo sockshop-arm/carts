@@ -8,7 +8,7 @@ DOCKER_CMD=docker
 
 CODE_DIR=$(cd $SCRIPT_DIR/..; pwd)
 echo $CODE_DIR
-$DOCKER_CMD run --rm -v $HOME/.m2:/root/.m2 -v $CODE_DIR:/usr/src/mymaven -w /usr/src/mymaven paperinik/rpi-maven install -DskipTests
+$DOCKER_CMD run --rm -v $HOME/.m2:/root/.m2 -v $CODE_DIR:/usr/src/mymaven -w /usr/src/mymaven paperinik/rpi-maven:3.6.3 install -DskipTests
 cp $CODE_DIR/target/*.jar $CODE_DIR/docker/carts
 
 $DOCKER_CMD build -t codelab/carts $CODE_DIR/$m;
